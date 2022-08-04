@@ -55,10 +55,12 @@ class NTRIPRos:
     self._rtcm_timer = None
     if self.rtcm_msg_pkg == 'mavros_msgs' and have_mavros_msgs == True:
       self._rtcm_pub = rospy.Publisher('rtcm', RTCM, queue_size=10)
+      rospy.loginfo('Using mavros_msgs for correction data')
     elif self.rtcm_msg_pkg == 'rtcm_msgs' and have_rtcm_msgs == True:
       self._rtcm_pub = rospy.Publisher('rtcm', Message, queue_size=10)
+      rospy.loginfo('Using rtcm_msgs for correction data')
     else:
-      rospy.logfatal('The rtcm message package {} could not be imported - check it is installed'.format(self.rtcm_msg_pkg))
+      rospy.logfatal('The configured rtcm message package {} could not be imported - check it is installed'.format(self.rtcm_msg_pkg))
       raise Exception('The rtcm message package {} could not be imported - check it is installed'.format(self.rtcm_msg_pkg))
 
     # Initialize the client
@@ -124,6 +126,7 @@ class NTRIPRos:
           message =raw_rtcm
         )
       self._rtcm_pub.publish(rtcm_msg)
+      rospy.logdebug_throttle(5.0, 'ntrip_ros client published rtcm corrections')
 
 
 if __name__ == '__main__':
