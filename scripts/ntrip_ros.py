@@ -6,6 +6,8 @@ import json
 
 import rclpy
 from std_msgs.msg import String
+from nmea_msgs.msg import Sentence
+from sensor_msgs.msg import NavSatFix
 
 from ntrip_ros_base import NTRIPRosBase, _RTCM_MSGS_NAME
 from ntrip_client.ntrip_client import NTRIPClient
